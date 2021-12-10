@@ -1,21 +1,53 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler'
+import { Image } from 'react-native'
+import React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
+import CoinStack from './src/components/CoinStack'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import Colors from './src/resources/colors'
+import FavoritesStack from './src/components/favorites/FavoritesStack'
 
-export default function App() {
+const Tabs = createBottomTabNavigator()
+
+function App () {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+  <NavigationContainer>
+    <Tabs.Navigator
+      tabBarOptions={{
+        tintColor: '#fefefe',
+        style: {
+          backgroundColor: Colors.blackPearl
+        }
+      }}
+      >
+      <Tabs.Screen
+        name="Coins"
+        component={CoinStack}
+        options={{
+          tabBarIcon: ({ size, color }) => (
+            <Image
+              style={{ tintColor: color, width: size, height: size }}
+              source={require('./assets/bank.png')}
+            />
+          )
+        }}
+        />
+     <Tabs.Screen
+        name="Favorites"
+        component={FavoritesStack}
+        options={{
+          tabBarIcon: ({ size, color }) => (
+            <Image
+              style={{ tintColor: color, width: size, height: size }}
+              source={require('./assets/star.png')}
+            />
+          )
+        }}
+        />
+
+    </Tabs.Navigator>
+  </NavigationContainer>
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
